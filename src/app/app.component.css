@@ -1,0 +1,33 @@
+#toggle {
+    position: fixed;
+    left: 0;
+    top: 8px;
+    z-index: 20;
+}
+
+mat-sidenav {
+    width: 240px;
+}
+
+mat-sidenav-container {
+    background: transparent;
+}
+
+.fixed-sidenav {
+    position: fixed;
+    top: 64px;
+    left: 0;
+}
+
+.fixed-toolbar-padding {
+    padding-top: 64px;
+}
+
+.toggle-color {
+    color: #1b3f6a;
+}
+
+.fixed-toolbar-toggle-color {
+    color: white;
+}
+

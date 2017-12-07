@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Asap');
+
+body {
+    margin: 0;
+}
+
+.global-font {
+    font-family: 'Asap', sans-serif;
+}
+
+.max-width-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 0 5vw;
+}
+

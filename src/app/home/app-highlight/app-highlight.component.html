@@ -1,0 +1,24 @@
+<div id="features">
+
+  <mat-card *ngFor="let highlight of highlights" class="mat-elevation-z0">
+
+    <img mat-card-image [src]="highlight.image">
+    <mat-card-title>{{highlight.title}}</mat-card-title>
+    <mat-card-content [innerHTML]="highlight.desc"></mat-card-content>
+    <mat-card-actions>
+
+      <span *ngIf="highlight.routerLink;then routerLink else link"></span>
+
+      <ng-template #routerLink>
+        <a mat-button [routerLink]="[highlight.routerLink]" routerLinkActive="active">LEARN MORE</a>
+      </ng-template>
+
+      <ng-template #link>
+        <a *ngIf="link" mat-button [href]="highlight.link">LEARN MORE</a>
+      </ng-template>
+
+    </mat-card-actions>
+
+  </mat-card>
+
+</div>

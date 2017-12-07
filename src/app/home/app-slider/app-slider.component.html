@@ -1,0 +1,41 @@
+<div class="app-slider" *ngIf="slides">
+
+  <span *ngIf="useChevrons" class="prev-container">
+    <button (click)="manualSlideTo(activeIndex - 1)"><i class="material-icons">chevron_left</i></button>
+  </span>
+
+  <span *ngIf="useChevrons" class="next-container">
+    <button (click)="manualSlideTo(activeIndex + 1)"><i class="material-icons">chevron_right</i></button>
+  </span>
+
+
+  <span   *ngFor="let slide of slides"
+          class="slide"
+          [@fade]="slide.state"
+          [style.background]="'url(' + slide.image + ')'"
+          [style.backgroundSize]="'cover'"
+          [style.backgroundRepeat]="'no-repeat'"
+          [style.backgroundPosition]="'center center'">
+    </span>
+
+  <span class="max-width-container">
+
+        <span [class]="'caption-container '">
+
+            <span class="caption">{{activeCaption}}</span>
+
+            <span *ngIf="useIndicators" class="indicators">
+
+                <button *ngFor="let slide of slides; let i = index" [class]="'indicator ' + slide.state" (click)="manualSlideTo(i)">
+                    <span class="cdk-visually-hidden">Select slider image number {{i}}</span>
+                    <i class="material-icons">chevron_right</i>
+                </button>
+
+            </span>
+
+
+        </span>
+
+    </span>
+
+</div>

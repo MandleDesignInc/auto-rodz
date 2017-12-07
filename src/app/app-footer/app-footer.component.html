@@ -1,0 +1,23 @@
+<footer class="global-font">
+
+  <div class="max-width-container">
+
+    <nav class="padding-large">
+      <a *ngFor="let item of content.navMenu" [routerLink]="item.routerLink" routerLinkActive="active-route">{{item.title}}</a>
+    </nav>
+
+    <div class="padding-small">{{content.copyright}}</div>
+
+    <div class="horizontal">
+
+      <div class="padding-small"><a class="border-right-desktop" [href]="'https://maps.google.com/?q=' + content.address">{{content.address}}</a></div>
+      <div class="padding-small"><a [href]="'tel:' + content.phoneLink">{{content.phone}}</a></div>
+
+    </div>
+
+    <div class="padding-large"><a href="http://mandledesign.com">Site by Mandle Design, Inc.</a></div>
+
+  </div>
+
+
+</footer>

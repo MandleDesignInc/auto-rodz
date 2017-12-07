@@ -1,0 +1,51 @@
+.page-content {
+    color: #494A4E;
+    padding: 5vw 0;
+}
+
+.products {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+mat-card {
+    flex: auto;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    max-width: 26%;
+}
+
+
+
+mat-card-actions {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    background: #1b3f6a;
+    margin-left: auto;
+}
+
+
+@media (max-width: 800px) {
+
+
+    mat-card {
+        max-width: 40%;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+
+    mat-card {
+        max-width: 70%;
+        margin: 10px auto;
+    }
+
+}
+

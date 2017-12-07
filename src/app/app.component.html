@@ -1,0 +1,24 @@
+<div id="app-container" [class.fixed-toolbar-padding]="toolbarIsFixed">
+
+  <button id="toggle" mat-icon-button [class.toggle-color]="!toolbarIsFixed" [class.fixed-toolbar-toggle-color]="toolbarIsFixed" (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
+
+  <app-bar (onSearch)="onSearch($event)" [navMenu]="navMenu" [background]="baseUrl + 'cms/assets/images/header-background.svg'" [headerContent]="headerContent" [toolbarIsFixed]="toolbarIsFixed"></app-bar>
+
+
+  <mat-sidenav-container>
+
+    <mat-sidenav #sidenav mode="over" [class.fixed-sidenav]="toolbarIsFixed">
+
+      <mat-nav-list>
+        <a *ngFor="let item of navMenu" [routerLink]="item.routerLink" routerLinkActive="active-route" (click)="sidenav.toggle()" mat-list-item>{{item.title}}</a>
+      </mat-nav-list>
+
+    </mat-sidenav>
+
+
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-container>
+
+</div>
+

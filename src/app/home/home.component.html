@@ -1,0 +1,38 @@
+<div *ngIf="ready" class="global-font">
+
+    <app-slider [slides]="slides" [useChevrons]="true" [auto]="true"></app-slider>
+
+    <div id="introSection">
+
+        <div class="max-width-container">
+            <div id="introText">{{intro}}</div>
+        </div>
+
+    </div>
+
+    <div id="lowerSection"
+         [style.background]="'url(' + baseUrl + 'cms/assets/images/highlight-section-background.svg)'"
+         [style.backgroundSize]="'cover'"
+         [style.backgroundRepeat]="'no-repeat'"
+         [style.backgroundPosition]="'top center'">
+
+        <div class="max-width-container">
+
+
+            <app-highlight [highlights]="highlights"></app-highlight>
+
+            <div id="quoteContainer">
+                <blockquote id="quote"><em>{{quote}}</em></blockquote>
+                <span id="author">{{author}}</span>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <app-footer [content]="footerContent"></app-footer>
+
+</div>
+

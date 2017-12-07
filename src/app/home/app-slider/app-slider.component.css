@@ -1,0 +1,117 @@
+.app-slider {
+    position: relative;
+    display: flex;
+    height: 500px;
+    width: 100%;
+}
+
+.slide {
+    /* opacity: 0; */
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.max-width-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.caption-container {
+    padding: 1vw 6vw;
+    margin-bottom: 32px;
+    color: white;
+    font-size: 2em;
+    font-weight: 700;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.caption {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+@media (max-width: 800px) {
+
+    .mdl-slider { height: 400px; }
+
+    .caption-container {
+        max-width: 90%;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 400px) {
+
+
+    .caption-container {
+        max-width: 95%;
+        font-size: 0.8em;
+    }
+}
+
+.indicators {
+    flex: 1;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 100%;
+    z-index: 20;
+}
+
+.indicator {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: white;
+}
+
+.indicator.active {
+    color: #01518C;
+}
+.indicator:hover {
+    color: #01518C;
+}
+
+.indicators button {
+    font-size: 40px;
+    font-weight: bolder;
+}
+
+.prev-container, .next-container {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    display: flex;
+}
+
+.prev-container {
+    left: 0;
+}
+
+.next-container {
+    right: 0;
+}
+
+.prev-container button, .next-container button {
+    margin: auto;
+    background: transparent;
+    border: 0;
+    color: white;
+}
+
+.prev-container button i, .next-container button i {
+    font-size: 72px;
+    font-weight: 700;
+}
