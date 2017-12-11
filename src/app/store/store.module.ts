@@ -4,6 +4,7 @@ import { ProductsComponent } from './products/products.component';
 import {StoreRoutingModule} from './store-routing.module';
 import {AppFooterModule} from '../app-footer/app-footer.module';
 import {MaterialModule} from '../material/material.module';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 @NgModule({
   imports: [
@@ -12,6 +13,6 @@ import {MaterialModule} from '../material/material.module';
       MaterialModule,
       StoreRoutingModule
   ],
-  declarations: [ProductsComponent]
+  declarations: [ProductsComponent, CheckoutComponent]
 })
 export class StoreModule { }
