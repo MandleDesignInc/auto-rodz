@@ -45,4 +45,9 @@ export class StoreService {
     // return this.http.get(this.productsUrl).map(response => response as any[]).map(products => products as Product[]);
   }
 
+  getProduct(id: number): Observable<Product> {
+      let url = `${this.productsUrl}/${id}`;
+      return this.http.get<Product>(url); // TODO: error handling
+  }
+
 }

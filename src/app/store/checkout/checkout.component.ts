@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {StoreService} from '../store.service';
+import {Product, StoreService} from '../store.service';
+import {GlobalService} from '../../global.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
 import 'rxjs/add/operator/switchMap';
+
 
 
 @Component({
@@ -11,13 +15,28 @@ import 'rxjs/add/operator/switchMap';
 })
 export class CheckoutComponent implements OnInit {
 
-  partNum: string = 'Cart is empty';
+  product: Product;
 
-  constructor(private storeSvc: StoreService, private route: ActivatedRoute) { }
+  paymentForm: FormGroup;
+
+
+  constructor(private storeSvc: StoreService, private route: ActivatedRoute, private globalSvc: GlobalService, private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.partNum = this.route.snapshot.paramMap.get('part_number');
-    console.log(this.partNum);
+
+      this.paymentForm = this.fb.group({
+          firstName: ['', Validators.required],
+          lastName: ['', Validators.required],
+          email: ['', Validators.email],
+          phone: ['', Validators.pattern('^(\\(?[0-9]{3}\\)?)((\\s|\\-){1})?[0-9]{3}((\\s|\\-){1})?[0-9]{4}$')],
+      });
+
+    this.storeSvc.getProduct(+this.route.snapshot.paramMap.get('part_number')).subscribe(results => {
+      this.product = results['object'];
+      console.log(this.product.id);
+    });
   }
+
+    get baseUrl(): string { return this.globalSvc.baseUrl; }
 
 }

@@ -26,6 +26,6 @@ export class ProductsComponent implements OnInit {
   get baseUrl(): string { return this.globalSvc.baseUrl; }
 
   buyNow(product: Product): void {
-    this.router.navigate(['/checkout/' + product.partNumber]);
+    this.router.navigate(['/checkout/' + product.id]);
   }
 }

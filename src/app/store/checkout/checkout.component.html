@@ -1,5 +1,36 @@
 <div class="page-content">
   <div class="max-width-container">
-    {{partNum}}
+
+    <div>Part Number: {{product.partNumber}}</div>
+    <div>Brand: {{product.brand}}</div>
+    <div>Description: {{product.description}}</div>
+    <div>Suggested Retail: {{product.suggestedRetail}}</div>
+
+
+
+    <form [formGroup]="paymentForm">
+
+      <mat-form-field class="item">
+        <input matInput placeholder="First name" formControlName="firstName" required>
+      </mat-form-field>
+
+      <mat-form-field class="item">
+        <input matInput placeholder="Last name" formControlName="lastName" required>
+      </mat-form-field>
+
+      <button type="button"
+              class="AcceptUI"
+              data-billingAddressOptions='{"show":true, "required":false}'
+              data-apiLoginID="Y8sqT5M4xf"
+              data-clientKey="4VN42NjdJmP773A9PSPpv7ABNQ52pxxQXVMJ9XXmLAyUks7zgdH2PdYm94m9aANB"
+              data-acceptUIFormBtnTxt="Submit"
+              data-acceptUIFormHeaderTxt="Card Information"
+              data-responseHandler="responseHandler"
+              mat-button>Pay
+      </button>
+
+    </form>
+
+
   </div>
 </div>
