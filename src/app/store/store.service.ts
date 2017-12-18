@@ -1,10 +1,40 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 
 export class ProductResults {
-  results: Product[] = [];
+    results: Product[] = [];
+}
+
+export class CheckoutData {
+
+    public cardData: CardData;
+    public shippingData: ShippingData;
+
+    constructor() {
+        this.shippingData = new ShippingData();
+    }
+}
+
+export class CardData {
+    public firstName: string;
+    public lastName: string;
+    public cardNumber: string;
+    public expDate: string;
+    public dataDescriptor: string;
+    public dataValue: string;
+}
+
+export class ShippingData {
+    public firstName: string = '';
+    public lastName: string = '';
+    public street: string = '';
+    public city: string = '';
+    public state: string = '';
+    public zip: string = '';
+    public email: string = '';
+    public phone: string = '';
 }
 
 export class Product {
@@ -34,20 +64,27 @@ export class Product {
 @Injectable()
 export class StoreService {
 
-  constructor(private http: HttpClient) { }
+    cart: Product[] = [];
 
-  private productsUrl = 'http://bluemandle2.com/~autorodz/cms/rest/products';
+    constructor(private http: HttpClient) { }
 
-  getProducts(): Observable<ProductResults> {
+    private productsUrl = 'http://bluemandle2.com/~autorodz/cms/rest/products';
 
-    return this.http.get<ProductResults>(this.productsUrl);
+    addToCart(product: Product): void {
+        this.cart.push(product);
+        console.log('cart contents: ' + this.cart.length);
+    }
 
-    // return this.http.get(this.productsUrl).map(response => response as any[]).map(products => products as Product[]);
-  }
+    getProducts(): Observable<ProductResults> {
 
-  getProduct(id: number): Observable<Product> {
-      let url = `${this.productsUrl}/${id}`;
-      return this.http.get<Product>(url); // TODO: error handling
-  }
+        return this.http.get<ProductResults>(this.productsUrl);
+
+        // return this.http.get(this.productsUrl).map(response => response as any[]).map(products => products as Product[]);
+    }
+
+    getProduct(id: number): Observable<Product> {
+        let url = `${this.productsUrl}/${id}`;
+        return this.http.get<Product>(url); // TODO: error handling
+    }
 
 }

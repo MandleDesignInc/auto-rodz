@@ -5,11 +5,11 @@
     font-size: 2em;
 }
 #introText {
-    padding: 5vw;
+    padding: 5vw 0;
 }
 
 #lowerSection {
-    padding: 5vw 0;
+   padding: 5vw 0;
 }
 
 #quoteContainer {

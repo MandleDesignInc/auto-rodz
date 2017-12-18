@@ -28,4 +28,8 @@ export class ProductsComponent implements OnInit {
   buyNow(product: Product): void {
     this.router.navigate(['/checkout/' + product.id]);
   }
+
+  addToCart(product: Product): void {
+    this.storeSvc.addToCart(product);
+  }
 }

@@ -36,7 +36,6 @@ $primary: (
         )
 );
 
-
 $accent: (
         50 : #ffebf5,
         100 : #ffcee5,
@@ -69,8 +68,6 @@ $accent: (
                 A700 : #000000,
         )
 );
-
-
 
 /* For use in src/lib/core/theming/_palette.scss */
 $warn: (
@@ -112,7 +109,11 @@ $app-warn: mat-palette($warn, A700);
 
 $app-theme: mat-dark-theme($app-primary, $app-accent, $app-warn);
 
-@include angular-material-theme($app-theme);
+$app-theme-light: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+// @include angular-material-theme($app-theme);
+@include angular-material-theme($app-theme-light);
+
 
 
 

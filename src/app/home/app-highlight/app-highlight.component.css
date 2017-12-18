@@ -27,6 +27,7 @@ mat-card-title {
 mat-card-content {
     max-width: 80%;
     margin: auto;
+    text-align: center;
 }
 
 mat-card-actions {

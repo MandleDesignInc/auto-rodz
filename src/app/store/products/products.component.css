@@ -17,6 +17,9 @@ mat-card {
     max-width: 26%;
 }
 
+img.mat-card-image {
+    background: ghostwhite;
+}
 
 
 mat-card-actions {
@@ -25,6 +28,7 @@ mat-card-actions {
 }
 
 button {
+    color: white;
     background: #1b3f6a;
     margin-left: auto;
 }

@@ -1,6 +1,13 @@
 #toggle {
     position: fixed;
-    left: 0;
+    left: 12px;
+    top: 8px;
+    z-index: 20;
+}
+
+#cartBtn {
+    position: fixed;
+    right: 12px;
     top: 8px;
     z-index: 20;
 }

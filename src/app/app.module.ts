@@ -19,6 +19,7 @@ import {PageService} from './page/page.service';
 import {StoreService} from './store/store.service';
 
 import {AppRoutingModule} from './app-routing.module';
+import {CartService} from './cart.service';
 
 
 
@@ -38,7 +39,7 @@ import {AppRoutingModule} from './app-routing.module';
       AppBarModule,
       AppRoutingModule
   ],
-  providers: [GlobalService, PageService, StoreService],
+  providers: [GlobalService, PageService, StoreService, CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

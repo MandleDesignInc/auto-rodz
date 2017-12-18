@@ -29,16 +29,7 @@ export class HomeComponent implements OnInit {
 
     this.highlights = this.mockHighlights;
 
-    this.intro = 'Intro text here about Auto Rodz. ' +
-        'Intro text here about Auto Rodz. ' +
-        'Intro text here about Auto Rodz. ' +
-        'Intro text here about Auto Rodz. ' +
-        'Intro text here about Auto Rodz. ' +
-        'Intro text here about Auto Rodz. ' +
-        'Intro text here about Auto Rodz. ' +
-        'Intro text here about Auto Rodz. ' +
-        'Intro text here about Auto Rodz. ' +
-        'Intro text here about Auto Rodz. ';
+    this.intro = 'We believe in a few simple things: fast cars, good parts, quality supplies. For years, Auto Rodz Performance & Machining has served the Quad Cities from our downtown Davenport location. Now, shop from our hand-picked selection of auto parts and supplies from the comfort of home! We have everything you need to perfect your ride.';
 
     this.quote = '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. ' +
         'Lorem ipsum dolor sit amet, consectetur adipiscing."';
@@ -62,12 +53,15 @@ export class HomeComponent implements OnInit {
 
   get mockHighlights(): Highlight[] {
 
-      let desc = 'Lorem ipsum foctor sinct et brute ella nor mae sic toto davenport what lorem ipsum';
+      let firstDesc = 'Learn more about the vision behind Auto Rodz, and how we’re making it come true';
+      let secondDesc = 'Auto Rodz is committed to choosing brands you can trust for quality and performance.';
+      let thirdDesc = 'Not sure what you need? No problem. Give us a call and we\'ll help you find the perfect part.';
 
 
-      let first = new Highlight('HIGHLIGHT', desc, this.globalSvc.baseUrl + 'cms/assets/images/highlight-1.jpg', '/home');
-      let second = new Highlight('HIGHLIGHT', desc, this.globalSvc.baseUrl + 'cms/assets/images/highlight-2.jpg', '/home');
-      let third = new Highlight('HIGHLIGHT', desc, this.globalSvc.baseUrl + 'cms/assets/images/highlight-3.jpg', '/home');
+      let first = new Highlight('ABOUT US', firstDesc, this.globalSvc.baseUrl + 'cms/assets/images/highlight-1.jpg', '/about');
+      let second = new Highlight('OUR BRANDS', secondDesc, this.globalSvc.baseUrl + 'cms/assets/images/highlight-2.jpg', '/brands');
+      let third = new Highlight('CONTACT US', thirdDesc, this.globalSvc.baseUrl + 'cms/assets/images/highlight-3.jpg', '/contact');
+
 
       let mockHighlights: Highlight[] = [];
 
@@ -80,6 +74,6 @@ export class HomeComponent implements OnInit {
 
   get footerContent(): FooterContent { return this.globalSvc.footerContent; }
 
-  get baseUrl(): string {return this.globalSvc.baseUrl;}
+  get baseUrl(): string {return this.globalSvc.baseUrl; }
 
 }

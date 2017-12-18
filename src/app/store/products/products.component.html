@@ -1,35 +1,36 @@
 <div *ngIf="products" class="global-font">
 
-  <div class="page-content">
+    <div class="page-content">
 
 
-    <div class="max-width-container">
+        <div class="max-width-container">
 
-      <div class="products">
+            <div class="products">
 
-        <mat-card *ngFor="let product of products">
+                <mat-card *ngFor="let product of products">
 
-          <img mat-card-image [src]="baseUrl + '/cms/assets/images/logo.png'">
+                    <img mat-card-image [src]="baseUrl + '/cms/assets/images/logo.png'">
 
-          <mat-card-title>{{product.suggestedRetail}}</mat-card-title>
-          <mat-card-subtitle>{{product.brand}}</mat-card-subtitle>
-          <mat-card-content>{{product.description}}</mat-card-content>
+                    <mat-card-title>{{product.suggestedRetail}}</mat-card-title>
+                    <mat-card-subtitle>{{product.brand}}</mat-card-subtitle>
+                    <mat-card-content>{{product.description}}</mat-card-content>
 
-          <mat-card-actions>
-            <button mat-raised-button>DETAILS</button>
-            <button mat-raised-button (click)="buyNow(product)">BUY NOW</button>
-          </mat-card-actions>
+                    <mat-card-actions>
+                        <button mat-raised-button>DETAILS</button>
+                        <button mat-raised-button (click)="addToCart(product)"><mat-icon>add_shopping_cart</mat-icon></button>
+                        <button mat-raised-button (click)="buyNow(product)">BUY NOW</button>
+                    </mat-card-actions>
 
-        </mat-card>
+                </mat-card>
 
-      </div>
+            </div>
+
+        </div>
+
 
     </div>
 
 
-  </div>
-
-
-  <app-footer [content]="footerContent"></app-footer>
+    <app-footer [content]="footerContent"></app-footer>
 
 </div>

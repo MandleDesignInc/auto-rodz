@@ -2,3 +2,34 @@
     color: #494A4E;
     padding: 5vw 0;
 }
+
+button {
+    margin-left: auto;
+    color: white;
+    background: #1b3f6a;
+}
+button:disabled {
+    background: grey;
+}
+
+mat-card {
+    flex: auto;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#payment.horizontal {
+    align-items: center;
+}
+
+#shipping {
+    margin-right: 12px;
+}
+

@@ -15,13 +15,15 @@ export class AppComponent implements OnInit {
 
 
     ngOnInit(): void {
-
         this.globalSvc.init();
-
     }
 
     onSearch(query: string): void {
         this.router.navigateByUrl('/products');
+    }
+
+    goToCart(): void {
+        this.router.navigateByUrl('/checkout');
     }
 
     @HostListener('window:scroll', [])
