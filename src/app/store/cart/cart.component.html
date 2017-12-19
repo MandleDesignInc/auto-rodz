@@ -1,0 +1,100 @@
+<div class="page-content global-font">
+    <div class="max-width-container">
+
+        <mat-horizontal-stepper #stepper [linear]="true">
+
+            <mat-step>
+
+                <ng-template matStepLabel>YOUR CART</ng-template>
+
+                <div class="cart">
+
+                    <div class="empty-msg" *ngIf="cart.empty">0 ITEMS IN CART</div>
+
+                    <mat-list>
+
+                        <mat-divider></mat-divider>
+                        <ng-container *ngFor="let item of cart.products">
+
+                            <mat-list-item>
+
+                                <mat-icon matListIcon>shopping_basket</mat-icon>
+
+                                <h3 matLine>{{item.description}}</h3>
+
+                                <span>{{item.suggestedRetail}}</span>
+
+                                <p matLine>
+
+                                    <span>{{item.brand}}</span>
+                                </p>
+
+                            </mat-list-item>
+
+                            <mat-divider></mat-divider>
+
+                        </ng-container>
+
+                    </mat-list>
+
+                    <div id="totals">
+                        <mat-list>
+
+                            <mat-list-item>
+                                <h3 matLine>SUBTOTAL : {{cart.subtotal | currency}}</h3>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <h3 matLine>SHIPPING : {{cart.shipping | currency}}</h3>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <h3 matLine>TAX : {{cart.tax | currency}}</h3>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <h2 matLine>TOTAL : {{cart.total | currency}}</h2>
+                            </mat-list-item>
+
+                        </mat-list>
+                    </div>
+
+                    <button mat-button matStepperNext>CHECKOUT</button>
+
+                </div>
+
+            </mat-step>
+
+            <mat-step>
+
+                <ng-template matStepLabel>SHIPPING</ng-template>
+
+                <app-shipping></app-shipping>
+
+            </mat-step>
+
+            <mat-step>
+
+                <ng-template matStepLabel>PAYMENT</ng-template>
+
+                <app-checkout></app-checkout>
+
+            </mat-step>
+
+            <mat-step>
+
+                <ng-template matStepLabel>CONFIRMATION</ng-template>
+
+            </mat-step>
+
+
+        </mat-horizontal-stepper>
+
+
+
+
+
+
+
+
+    </div>
+</div>
+
+<app-footer [content]="footerContent"></app-footer>
