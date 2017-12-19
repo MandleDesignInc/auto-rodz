@@ -1,104 +1,18 @@
-<div class="page-content">
-    <div class="max-width-container">
+<mat-icon>payment</mat-icon>
 
+<button type="button"
+        class="AcceptUI"
+        data-billingAddressOptions='{"show":true, "required":true}'
+        data-apiLoginID="8sqT5M4xf"
+        data-clientKey="4VN42NjdJmP773A9PSPpv7ABNQ52pxxQXVMJ9XXmLAyUks7zgdH2PdYm94m9aANB"
+        data-acceptUIFormHeaderTxt="Payment Information"
+        data-acceptUIFormBtnTxt="Continue"
+        data-responseHandler="responseHandler"
+        mat-icon-button
+        id="editPaymentBtn">
+    <mat-icon>edit</mat-icon>
+</button>
 
-
-        <div *ngIf="cart.length < 1">Your cart is empty!!</div>
-
-        <mat-card *ngFor="let product of cart">
-
-            <mat-card-title>{{product.description}}</mat-card-title>
-            <mat-card-subtitle>{{product.suggestedRetail}}</mat-card-subtitle>
-            <mat-card-content>
-                <div>Part Number: {{product.partNumber}}</div>
-                <div>Brand: {{product.brand}}</div>
-            </mat-card-content>
-
-            <mat-card-actions>
-                <button mat-icon-button (click)="removeItem()"><mat-icon>remove_shopping_cart</mat-icon></button>
-            </mat-card-actions>
-        </mat-card>
-
-
-        <form [formGroup]="checkoutForm">
-
-            <div class="horizontal">
-
-                <mat-card id="shipping">
-
-                    <h2><mat-icon>local_shipping</mat-icon></h2>
-                    <mat-form-field class="item" color="primary">
-                        <input matInput placeholder="First name" formControlName="firstName" required>
-                    </mat-form-field>
-
-                    <mat-form-field class="item">
-                        <input matInput placeholder="Last name" formControlName="lastName" required>
-                    </mat-form-field>
-
-                    <mat-form-field class="item">
-                        <input matInput placeholder="Street" formControlName="street" required>
-                    </mat-form-field>
-
-                    <mat-form-field class="item">
-                        <input matInput placeholder="State" formControlName="state" required>
-                    </mat-form-field>
-                    <mat-form-field class="item">
-                        <input matInput placeholder="Zip" formControlName="zip" required>
-                    </mat-form-field>
-                    <mat-form-field class="item">
-                        <input matInput placeholder="Phone #" formControlName="phone" required>
-                    </mat-form-field>
-                    <mat-form-field class="item">
-                        <input matInput placeholder="Email Address" formControlName="email" required>
-                    </mat-form-field>
-
-                </mat-card>
-
-
-                <!--
-                <input type="hidden" name="dataValue" id="dataValue"/>
-                <input type="hidden" name="dataDescriptor" id="dataDescriptor"/>
-                -->
-
-                <mat-card id="payment">
-
-                    <div class="horizontal">
-
-                        <mat-icon>payment</mat-icon>
-
-                        <button type="button"
-                                class="AcceptUI"
-                                data-billingAddressOptions='{"show":true, "required":true}'
-                                data-apiLoginID="8sqT5M4xf"
-                                data-clientKey="4VN42NjdJmP773A9PSPpv7ABNQ52pxxQXVMJ9XXmLAyUks7zgdH2PdYm94m9aANB"
-                                data-acceptUIFormHeaderTxt="Payment Information"
-                                data-acceptUIFormBtnTxt="Continue"
-                                data-responseHandler="responseHandler"
-                                mat-icon-button
-                                id="editPaymentBtn">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-
-                    </div>
-
-                    <div>
-
-                        <div>Name on card: <span *ngIf="checkoutData.cardData">{{checkoutData.cardData.firstName + ' ' + checkoutData.cardData.lastName}}</span></div>
-                        <div>Card number: <span *ngIf="checkoutData.cardData">{{checkoutData.cardData.cardNumber}}</span></div>
-                        <div>Card expiration:<span *ngIf="checkoutData.cardData">{{checkoutData.cardData.expDate}}</span></div>
-                    </div>
-
-                </mat-card>
-
-            </div>
-
-
-
-            <button mat-button (click)="sendOrder()" [disabled]="!orderReady" id="sendBtn">Complete Order</button>
-
-        </form>
-
-    </div>
-</div>
-
-<app-footer [content]="footerContent"></app-footer>
+<div>Name on card: <span *ngIf="checkoutData.cardData">{{checkoutData.cardData.firstName + ' ' + checkoutData.cardData.lastName}}</span></div>
+<div>Card number: <span *ngIf="checkoutData.cardData">{{checkoutData.cardData.cardNumber}}</span></div>
+<div>Card expiration:<span *ngIf="checkoutData.cardData">{{checkoutData.cardData.expDate}}</span></div>

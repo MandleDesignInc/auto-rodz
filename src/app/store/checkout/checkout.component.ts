@@ -1,9 +1,7 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {CardData, CheckoutData, Product, StoreService} from '../store.service';
-import {FooterContent, GlobalService} from '../../global.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-
+import {CardData, Cart, CheckoutData, StoreService} from '../store.service';
+import {GlobalService} from '../../global.service';
 import 'rxjs/add/operator/switchMap';
 
 
@@ -16,13 +14,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
     checkoutData: CheckoutData;
 
-    checkoutForm: FormGroup;
-
-    orderReady: boolean = false;
-
     scripts: HTMLScriptElement[] = [];
 
-    constructor(private storeSvc: StoreService, private route: ActivatedRoute, private globalSvc: GlobalService, private fb: FormBuilder) {
+    constructor(private storeSvc: StoreService, private route: ActivatedRoute, private globalSvc: GlobalService) {
         console.log('Constructor called');
         this.checkoutData = new CheckoutData();
     }
@@ -30,17 +24,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     ngOnInit() {
 
         console.log('onInit() called');
-
-        this.checkoutForm = this.fb.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            email: ['', Validators.email],
-            phone: ['', Validators.pattern('^(\\(?[0-9]{3}\\)?)((\\s|\\-){1})?[0-9]{3}((\\s|\\-){1})?[0-9]{4}$')],
-            street: ['', Validators.required],
-            city: ['', Validators.required],
-            state: ['', Validators.required],
-            zip: ['', Validators.required]
-        });
 
         // So far this works best TODO: simplify these
         this.startLoadingResponseScript().then(() => {
@@ -127,23 +110,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
     }
 
-    removeItem(): void {
-        // TODO
-    }
     sendOrder(): void {
+        console.log('sendOrder()');
         // TODO
     }
 
-    get cart(): Product[] {
+    get cart(): Cart {
         return this.storeSvc.cart;
     }
 
     get baseUrl(): string {
         return this.globalSvc.baseUrl;
-    }
-
-    get footerContent(): FooterContent {
-        return this.globalSvc.footerContent;
     }
 
 }

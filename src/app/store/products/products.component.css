@@ -21,7 +21,6 @@ img.mat-card-image {
     background: ghostwhite;
 }
 
-
 mat-card-actions {
     display: flex;
     justify-content: center;
@@ -30,12 +29,10 @@ mat-card-actions {
 button {
     color: white;
     background: #1b3f6a;
-    margin-left: auto;
+    width: 100%;
 }
 
-
 @media (max-width: 800px) {
-
 
     mat-card {
         max-width: 40%;
@@ -44,7 +41,6 @@ button {
 }
 
 @media (max-width: 500px) {
-
 
     mat-card {
         max-width: 70%;

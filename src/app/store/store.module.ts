@@ -6,6 +6,8 @@ import {AppFooterModule} from '../app-footer/app-footer.module';
 import {MaterialModule} from '../material/material.module';
 import { CheckoutComponent } from './checkout/checkout.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { CartComponent } from './cart/cart.component';
+import { ShippingComponent } from './shipping/shipping.component';
 
 @NgModule({
   imports: [
@@ -15,6 +17,6 @@ import {ReactiveFormsModule} from '@angular/forms';
       MaterialModule,
       StoreRoutingModule
   ],
-  declarations: [ProductsComponent, CheckoutComponent]
+  declarations: [ProductsComponent, CheckoutComponent, CartComponent, ShippingComponent]
 })
 export class StoreModule { }

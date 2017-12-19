@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     }
 
     goToCart(): void {
-        this.router.navigateByUrl('/checkout');
+        this.router.navigateByUrl('/cart');
     }
 
     @HostListener('window:scroll', [])

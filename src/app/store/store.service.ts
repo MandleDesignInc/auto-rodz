@@ -61,18 +61,35 @@ export class Product {
 
 }
 
+export class Cart {
+    products: Product[] = [];
+
+    subtotal: number = 0;
+    shipping: number = 0;
+    tax: number = 0;
+    total: number = 0;
+
+    constructor() {}
+
+    get empty(): boolean {
+        return this.products.length < 1;
+    }
+}
+
 @Injectable()
 export class StoreService {
 
-    cart: Product[] = [];
+    cart: Cart;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+        this.cart = new Cart();
+    }
 
     private productsUrl = 'http://bluemandle2.com/~autorodz/cms/rest/products';
 
     addToCart(product: Product): void {
-        this.cart.push(product);
-        console.log('cart contents: ' + this.cart.length);
+        this.cart.products.push(product);
+        console.log('cart contents: ' + this.cart.products.length);
     }
 
     getProducts(): Observable<ProductResults> {
@@ -85,6 +102,10 @@ export class StoreService {
     getProduct(id: number): Observable<Product> {
         let url = `${this.productsUrl}/${id}`;
         return this.http.get<Product>(url); // TODO: error handling
+    }
+
+    processOrder(): void {
+
     }
 
 }
