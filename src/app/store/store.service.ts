@@ -64,16 +64,33 @@ export class Product {
 export class Cart {
     products: Product[] = [];
 
-    subtotal: number = 0;
-    shipping: number = 0;
-    tax: number = 0;
-    total: number = 0;
-
     constructor() {}
 
     get empty(): boolean {
         return this.products.length < 1;
     }
+
+    get subTotal(): number {
+        let subTotal: number = 0;
+        this.products.forEach(item => subTotal += item.suggestedRetail);
+        return subTotal;
+    }
+
+    get shipping(): number {
+        let shipping: number = this.subTotal * 0.1;
+        return shipping;
+    }
+
+    get tax(): number {
+        let tax: number = this.subTotal * 0.1;
+        return tax;
+    }
+
+    get total(): number {
+        return this.subTotal + this.shipping + this.tax;
+    }
+
+
 }
 
 @Injectable()
