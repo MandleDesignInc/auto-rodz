@@ -77,6 +77,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         let script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = 'https://jstest.authorize.net/v3/AcceptUI.js';
+        // script.src = 'https://js.authorize.net/v3/AcceptUI.js';
+        script.charset = 'utf-8';
         script.async = true;
         document.getElementsByTagName('body')[0].appendChild(script);
         this.scripts.push(script);

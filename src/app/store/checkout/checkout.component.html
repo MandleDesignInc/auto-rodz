@@ -1,5 +1,6 @@
 <mat-icon>payment</mat-icon>
 
+
 <button type="button"
         class="AcceptUI"
         data-billingAddressOptions='{"show":true, "required":true}'
@@ -12,6 +13,21 @@
         id="editPaymentBtn">
     <mat-icon>edit</mat-icon>
 </button>
+
+<!--
+<button type="button"
+        class="AcceptUI"
+        data-billingAddressOptions='{"show":true, "required":true}'
+        data-apiLoginID="73Q5cHDp28mg"
+        data-clientKey="8emhZ3NqGd9KfmYav2W2sYsZFL9SXvJra9H38B7Z2Vr989bTtHX9Qm7VFBwb3DPK"
+        data-acceptUIFormHeaderTxt="Payment Information"
+        data-acceptUIFormBtnTxt="Continue"
+        data-responseHandler="responseHandler"
+        mat-icon-button
+        id="editPaymentBtn">
+    <mat-icon>edit</mat-icon>
+</button>
+-->
 
 <div>Name on card: <span *ngIf="checkoutData.cardData">{{checkoutData.cardData.firstName + ' ' + checkoutData.cardData.lastName}}</span></div>
 <div>Card number: <span *ngIf="checkoutData.cardData">{{checkoutData.cardData.cardNumber}}</span></div>
