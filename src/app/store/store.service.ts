@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 
 export class ProductResults {
@@ -103,6 +103,7 @@ export class StoreService {
     }
 
     private productsUrl = 'http://bluemandle2.com/~autorodz/cms/rest/products';
+    private testPostUrl = 'http://bluemandle2.com/~autorodz/cms/rest/charge';
 
     addToCart(product: Product): void {
         this.cart.products.push(product);
@@ -122,6 +123,17 @@ export class StoreService {
     }
 
     processOrder(): void {
+
+    }
+
+    testPost(dataValue: string): Observable<any[]> {
+
+        let headers = new HttpHeaders();
+
+        let formData = new FormData();
+        formData.set('dataValue', dataValue);
+
+        return this.http.post<any[]>(this.testPostUrl, formData, {headers});
 
     }
 

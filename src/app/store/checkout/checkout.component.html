@@ -32,3 +32,4 @@
 <div>Name on card: <span *ngIf="checkoutData.cardData">{{checkoutData.cardData.firstName + ' ' + checkoutData.cardData.lastName}}</span></div>
 <div>Card number: <span *ngIf="checkoutData.cardData">{{checkoutData.cardData.cardNumber}}</span></div>
 <div>Card expiration:<span *ngIf="checkoutData.cardData">{{checkoutData.cardData.expDate}}</span></div>
+<button mat-button (click)="testPost()">TEST POST</button>

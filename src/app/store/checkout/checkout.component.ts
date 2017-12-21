@@ -117,6 +117,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         // TODO
     }
 
+    testPost(): void {
+        this.storeSvc.testPost(this.checkoutData.cardData.dataValue).subscribe(response => {
+            console.log(response);
+        });
+    }
+
     get cart(): Cart {
         return this.storeSvc.cart;
     }
