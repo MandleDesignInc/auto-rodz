@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import 'rxjs/add/operator/map';
+import { of } from 'rxjs/observable/of';
+import { catchError, map, tap } from 'rxjs/operators';
 
 export class ProductResults {
     results: Product[] = [];
@@ -110,20 +111,38 @@ export class StoreService {
         console.log('cart contents: ' + this.cart.products.length);
     }
 
+    /*
     getProducts(): Observable<ProductResults> {
 
-        return this.http.get<ProductResults>(this.productsUrl);
+        // this works!
+        // return this.http.get<ProductResults>(this.productsUrl);
 
-        // return this.http.get(this.productsUrl).map(response => response as any[]).map(products => products as Product[]);
+
+        return this.http.get<ProductResults>(this.productsUrl).pipe(
+            tap(products => console.log('fetched ' + products.results.length + ' products')),
+            // catchError(error => console.log(error))
+        );
+
+    }
+    */
+
+    getProducts(term: string): Observable<ProductResults> {
+
+        if (!term.trim()) {
+            // if not search term, return empty results object.
+            return of(new ProductResults());
+        }
+
+        return this.http.get<ProductResults>(`http://bluemandle2.com/~autorodz/cms/rest/products/?query=${term}`).pipe(
+            tap(products => console.log('fetched ' + products.results.length + ' products')),
+            // catchError(error => console.log(error))
+        );
+
     }
 
     getProduct(id: number): Observable<Product> {
         let url = `${this.productsUrl}/${id}`;
         return this.http.get<Product>(url); // TODO: error handling
-    }
-
-    processOrder(): void {
-
     }
 
     testPost(dataValue: string): Observable<any[]> {

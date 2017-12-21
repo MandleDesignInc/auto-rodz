@@ -8,6 +8,7 @@ import {CartComponent} from './cart/cart.component';
   imports: [
     RouterModule.forChild([
         {path: 'products', component: ProductsComponent},
+        {path: 'products/:query', component: ProductsComponent},
         {path: 'cart', component: CartComponent},
         {path: 'checkout', component: CheckoutComponent},
         {path: 'checkout/:part_number', component: CheckoutComponent}
