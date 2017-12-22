@@ -41,8 +41,8 @@ export class HomeComponent implements OnInit {
 
   get mockSlides(): MdlSlide[] {
 
-    let slide1 = new MdlSlide('0', 'caption 1', this.globalSvc.baseUrl + 'cms/assets/images/slider-image.jpg');
-    let slide2 = new MdlSlide('1', 'caption 2', this.globalSvc.baseUrl + 'cms/assets/images/highlight-2.jpg');
+    let slide1 = new MdlSlide('0', 'OUR VISION', this.globalSvc.baseUrl + 'cms/assets/images/slider/slider-2.jpg');
+    let slide2 = new MdlSlide('1', 'OUR BRANDS', this.globalSvc.baseUrl + 'cms/assets/images/slider/slider-1.jpg');
 
     let mockSlides: MdlSlide[] = [];
     mockSlides.push(slide1);
@@ -58,9 +58,9 @@ export class HomeComponent implements OnInit {
       let thirdDesc = 'Not sure what you need? No problem. Give us a call and we\'ll help you find the perfect part.';
 
 
-      let first = new Highlight('ABOUT US', firstDesc, this.globalSvc.baseUrl + 'cms/assets/images/highlight-1.jpg', '/about');
-      let second = new Highlight('OUR BRANDS', secondDesc, this.globalSvc.baseUrl + 'cms/assets/images/highlight-2.jpg', '/brands');
-      let third = new Highlight('CONTACT US', thirdDesc, this.globalSvc.baseUrl + 'cms/assets/images/highlight-3.jpg', '/contact');
+      let first = new Highlight('ABOUT US', firstDesc, this.globalSvc.baseUrl + 'cms/assets/images/highlights/highlight-1.jpg', '/about');
+      let second = new Highlight('OUR BRANDS', secondDesc, this.globalSvc.baseUrl + 'cms/assets/images/highlights/highlight-2.jpg', '/brands');
+      let third = new Highlight('CONTACT US', thirdDesc, this.globalSvc.baseUrl + 'cms/assets/images/highlights/highlight-3.jpg', '/contact');
 
 
       let mockHighlights: Highlight[] = [];

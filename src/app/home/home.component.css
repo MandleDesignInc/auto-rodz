@@ -2,10 +2,11 @@
 #introSection{
     background: #EAEDF5;
     color: #494A4E;
-    font-size: 2em;
+    font-size: 1.8em;
 }
 #introText {
     padding: 5vw 0;
+    text-align: center;
 }
 
 #lowerSection {
