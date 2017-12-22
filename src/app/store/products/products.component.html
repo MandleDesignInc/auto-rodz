@@ -1,4 +1,4 @@
-<div *ngIf="products" class="global-font">
+<div *ngIf="productResults" class="global-font">
 
     <div class="page-content">
 
@@ -7,7 +7,7 @@
 
             <div class="products">
 
-                <mat-card *ngFor="let product of products">
+                <mat-card *ngFor="let product of productResults.results">
 
                     <img mat-card-image [src]="baseUrl + '/cms/assets/images/logo.png'">
 

@@ -1,33 +1,49 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Product, ProductResults, StoreService} from '../store.service';
 import {FooterContent, GlobalService} from '../../global.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css'],
-  encapsulation: ViewEncapsulation.Emulated
+    selector: 'app-products',
+    templateUrl: './products.component.html',
+    styleUrls: ['./products.component.css'],
+    encapsulation: ViewEncapsulation.Emulated
 })
 export class ProductsComponent implements OnInit {
 
-  products: Product[];
+    productResults: ProductResults;
 
-  constructor(private storeSvc: StoreService, private globalSvc: GlobalService, private route: ActivatedRoute) { }
+    constructor(private storeSvc: StoreService, private globalSvc: GlobalService, private route: ActivatedRoute) {
+    }
 
-  ngOnInit() {
+    ngOnInit() {
 
-    let query = this.route.snapshot.paramMap.get('query');
+        let query = this.route.snapshot.paramMap.get('query');
 
-    // TODO: only working with id for now...
-    query = '1';
+        if (query !== null && query.length > 0) {
 
-    this.storeSvc.getProducts(query).subscribe(results => this.products = results.results);
-  }
+            this.storeSvc.searchProducts(query).subscribe(results => {
+                console.log(results);
+                this.productResults = results;
+            });
 
-  get footerContent(): FooterContent { return this.globalSvc.footerContent; }
+        } else {
 
-  get baseUrl(): string { return this.globalSvc.baseUrl; }
+            this.storeSvc.getProducts();
+        }
 
-  addToCart(product: Product): void { this.storeSvc.addToCart(product); }
+
+    }
+
+    get footerContent(): FooterContent {
+        return this.globalSvc.footerContent;
+    }
+
+    get baseUrl(): string {
+        return this.globalSvc.baseUrl;
+    }
+
+    addToCart(product: Product): void {
+        this.storeSvc.addToCart(product);
+    }
 }

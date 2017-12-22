@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
     }
 
     onSearch(query: string): void {
-        this.router.navigateByUrl('/products');
+        this.router.navigateByUrl(`/products/${query}`);
     }
 
     goToCart(): void {

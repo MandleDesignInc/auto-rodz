@@ -80,8 +80,10 @@ export class AppSliderComponent implements AfterViewInit, OnDestroy {
 
         if (index >= this.slides.length) index = 0;
 
+        if (index < 0) index = this.slides.length - 1;
+
         // disable current slide if present
-        if (this.activeIndex > -1) this.slides[this.activeIndex].toggleState();
+        if (this.intervalId) this.slides[this.activeIndex].toggleState();
 
         // activate new slide
         this.slides[index].toggleState();

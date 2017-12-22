@@ -37,8 +37,8 @@
             </mat-nav-list>
 
             <div id="inputContainer">
-                <input placeholder="Keyword or part #">
-                <button id="searchBtn" mat-icon-button (click)="search()"><mat-icon>search</mat-icon></button>
+                <input #searchBox placeholder="Keyword or part #">
+                <button id="searchBtn" mat-icon-button (click)="search(searchBox.value)"><mat-icon>search</mat-icon></button>
             </div>
 
 

@@ -111,7 +111,7 @@ export class StoreService {
         console.log('cart contents: ' + this.cart.products.length);
     }
 
-    /*
+
     getProducts(): Observable<ProductResults> {
 
         // this works!
@@ -124,9 +124,9 @@ export class StoreService {
         );
 
     }
-    */
 
-    getProducts(term: string): Observable<ProductResults> {
+
+    searchProducts(term: string): Observable<ProductResults> {
 
         if (!term.trim()) {
             // if not search term, return empty results object.

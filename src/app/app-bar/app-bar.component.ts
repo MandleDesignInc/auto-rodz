@@ -23,9 +23,8 @@ export class AppBarComponent implements OnInit {
 
   }
 
-  // TODO: temp search method
-  search(): void {
-    this.onSearch.emit('search');
+  search(query: string): void {
+    this.onSearch.emit(query);
   }
 
 }
