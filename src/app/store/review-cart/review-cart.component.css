@@ -1,0 +1,116 @@
+.cart .content {
+  display: flex;
+  flex-direction: row;
+}
+
+mat-card {
+  margin: 8px;
+  background: whitesmoke;
+}
+
+mat-list {
+  flex: 1 1 auto;
+}
+
+mat-list-item {
+  height: auto !important;
+  padding: 12px 0;
+}
+
+mat-list-item .content {
+  padding-left: 12px;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+mat-list-item .vertical {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+mat-list-item .vertical strong {
+  color: #1b3f6a;
+}
+
+mat-list-item .vertical span {
+  color: gray;
+  font-size: 14px;
+}
+
+mat-list-item .count-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+mat-list-item .count-control .count {
+  font-size: 18px;
+  width: 32px;
+  text-align: center;
+}
+
+mat-list-item .count-control button {
+  min-width: 0;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  margin: 0 4px;
+  background: #1b3f6a;
+  color: white;
+}
+
+mat-list-item .right{
+  margin-left: auto;
+  color: #1b3f6a;
+}
+
+.availability {
+  color: red;
+  font-size: 12px;
+  padding-left: 16px;
+}
+
+#totals {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#totals mat-card-actions {
+  display: flex;
+}
+
+#totals mat-card-actions button {
+  width: 100%;
+  background: #1b3f6a;
+  color: whitesmoke;
+}
+
+#totals div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#totals div strong {
+  margin-left: 12px;
+  padding: 0 4px;
+  color: #1b3f6a;
+}
+
+#totals .calculate-button {
+  line-height: unset;
+  align-items: flex-end;
+  margin-left: 12px;
+  right: 0;
+  padding: 0 4px;
+}
+
+
+

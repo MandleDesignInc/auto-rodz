@@ -1,26 +1,56 @@
 .page-content {
   color: #494A4E;
-  padding: 5vw 0;
+  padding: 2vw 0 5vw 0;
 }
 
-.cart {
+.button-container {
+  padding: 24px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.payment-success {
+  min-height: 20vh;
+}
+
+button {
+  display: inline-block;
+  color: white;
+  background: #1b3f6a;
+}
+
+button[disabled] { background: gray; }
+
+
+.step-content {
+  min-height: 30vh;
+}
+
+.loading {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+}
+
+.loading mat-spinner {
+  margin: auto;
+}
+
+.confirmation {
   display: flex;
   flex-direction: column;
 }
 
-#totals {
-  text-align: right;
+.confirmation .content {
+  flex: 1 1 auto;
+  display: flex;
 }
 
-.empty-msg {
-  color: lightgray;
-  font-size: 2em;
-  text-align: center;
-  padding: 24px 0;
-}
-
-button {
-
-  color: white;
-  background: #1b3f6a;
+.confirmation .content h3 {
+  margin: auto;
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
-import {FooterContent, GlobalService} from '../global.service';
-import {Page, PageService} from './page.service';
+import {FooterContent, GlobalService} from '../services/global.service';
+import {Page, PageService} from '../services/page.service';
 
 @Component({
   selector: 'app-page',
@@ -20,6 +20,7 @@ export class PageComponent implements OnInit {
     let pageId = this.globalSvc.getPageId(this.location.path());
 
     this.pageSvc.getPage(pageId).subscribe(result => this.page = result);
+
   }
 
   get footerContent(): FooterContent { return this.globalSvc.footerContent; }

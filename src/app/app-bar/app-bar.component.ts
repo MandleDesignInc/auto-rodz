@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {HeaderContent, NavItem} from '../global.service';
+import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {HeaderContent, NavItem} from '../services/global.service';
+import {SearchService} from '../services/search.service';
 
 @Component({
   selector: 'app-bar',
@@ -8,23 +9,21 @@ import {HeaderContent, NavItem} from '../global.service';
   encapsulation: ViewEncapsulation.Emulated
 })
 export class AppBarComponent implements OnInit {
-
   @Input() headerContent: HeaderContent;
   @Input() background: string;
   @Input() navMenu: NavItem[];
   @Input() toolbarIsFixed: boolean = false;
 
-  @Output() onSearch = new EventEmitter<string>();
+  @ViewChild('searchBox') searchBox: any;
 
 
-  constructor() { }
 
-  ngOnInit() {
+  constructor(private searchService: SearchService) { }
 
-  }
+  ngOnInit() {}
 
-  search(query: string): void {
-    this.onSearch.emit(query);
+  search(term: string): void {
+    this.searchService.performSearch(term);
   }
 
 }

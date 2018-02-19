@@ -5,11 +5,18 @@
     z-index: 20;
 }
 
-#cartBtn {
-    position: fixed;
-    right: 12px;
-    top: 8px;
-    z-index: 20;
+#cartBtnContainer {
+  position: fixed;
+  right: 12px;
+  top: 8px;
+  z-index: 20;
+}
+
+#cartCount {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
 }
 
 mat-sidenav {

@@ -1,0 +1,24 @@
+<div class="global-font">
+
+  <div class="page-content">
+
+    <div class="max-width-container">
+
+      <div id="brands">
+        <ng-container *ngFor="let brand of brands$ | async">
+
+          <mat-card *ngIf="brand.name" (click)="onBrandClicked(brand.name)" (mouseover)="brand.hovered = true;" (mouseout)="brand.hovered = false;" [class.mat-elevation-z12]="brand.hovered">
+            {{brand.name | removeQuote}}
+          </mat-card>
+
+        </ng-container>
+      </div>
+
+
+    </div>
+
+  </div>
+
+  <app-footer [content]="globalService.footerContent"></app-footer>
+
+</div>

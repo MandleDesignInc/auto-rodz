@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {FooterContent, GlobalService} from '../global.service';
+import {FooterContent, GlobalService} from '../services/global.service';
 import {MdlSlide} from './app-slider/mdl-slide';
 import {Highlight} from './app-highlight/highlight';
 

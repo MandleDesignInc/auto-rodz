@@ -1,35 +1,124 @@
-<mat-icon>payment</mat-icon>
+<div class="global-font">
+
+  <div *ngIf="devMode" class="dev-mode">
+
+    <h3>DATA VALID: {{dataValid}}</h3>
+
+    <div>
+      <h3>BILLING</h3>
+      <div>Form status: {{billingForm.status}}</div>
+      <div>{{billingData.firstName + ' ' + billingData.lastName}}</div>
+      <div>{{billingData.address + ' ' + billingData.city + ' ' + billingData.state + ' ' + billingData.zip}}</div>
+    </div>
 
 
-<button type="button"
-        class="AcceptUI"
-        data-billingAddressOptions='{"show":true, "required":true}'
-        data-apiLoginID="8sqT5M4xf"
-        data-clientKey="4VN42NjdJmP773A9PSPpv7ABNQ52pxxQXVMJ9XXmLAyUks7zgdH2PdYm94m9aANB"
-        data-acceptUIFormHeaderTxt="Payment Information"
-        data-acceptUIFormBtnTxt="Continue"
-        data-responseHandler="responseHandler"
-        mat-icon-button
-        id="editPaymentBtn">
-    <mat-icon>edit</mat-icon>
-</button>
+    <div>
+      <h3>SHIPPING</h3>
+      <div>Form Status: {{shippingForm.status}}</div>
+      <div>{{shippingData.firstName + ' ' + shippingData.lastName}}</div>
+      <div>{{shippingData.address + ' ' + shippingData.city + ' ' + shippingData.state + ' ' + shippingData.zip}}</div>
+    </div>
 
-<!--
-<button type="button"
-        class="AcceptUI"
-        data-billingAddressOptions='{"show":true, "required":true}'
-        data-apiLoginID="73Q5cHDp28mg"
-        data-clientKey="8emhZ3NqGd9KfmYav2W2sYsZFL9SXvJra9H38B7Z2Vr989bTtHX9Qm7VFBwb3DPK"
-        data-acceptUIFormHeaderTxt="Payment Information"
-        data-acceptUIFormBtnTxt="Continue"
-        data-responseHandler="responseHandler"
-        mat-icon-button
-        id="editPaymentBtn">
-    <mat-icon>edit</mat-icon>
-</button>
--->
+  </div>
 
-<div>Name on card: <span *ngIf="checkoutData.cardData">{{checkoutData.cardData.firstName + ' ' + checkoutData.cardData.lastName}}</span></div>
-<div>Card number: <span *ngIf="checkoutData.cardData">{{checkoutData.cardData.cardNumber}}</span></div>
-<div>Card expiration:<span *ngIf="checkoutData.cardData">{{checkoutData.cardData.expDate}}</span></div>
-<button mat-button (click)="testPost()">TEST POST</button>
+  <h1><strong>CHECKOUT</strong></h1>
+
+  <div class="checkout-forms">
+
+    <mat-card>
+      <form class="billing form" [formGroup]="billingForm">
+        <h4>BILLING INFORMATION</h4>
+
+        <div [formGroup]="billingForm" class="vertical">
+          <mat-form-field>
+            <input matInput formControlName="firstName" placeholder="FIRST NAME">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput formControlName="lastName" placeholder="LAST NAME">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="address" placeholder="ADDRESS">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="city" placeholder="CITY">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="STATE" formControlName="state">
+              <mat-option *ngFor="let state of states.list" [value]="state">
+                {{state}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="zip" placeholder="ZIP">
+          </mat-form-field>
+
+          <div class="horizontal">
+            <mat-form-field>
+              <input matInput formControlName="phone" placeholder="PHONE #" >
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput formControlName="email" placeholder="EMAIL" >
+            </mat-form-field>
+          </div>
+
+        </div>
+      </form>
+    </mat-card>
+
+    <mat-card>
+
+      <form class="shipping form" [formGroup]="shippingForm">
+        <h4>SHIPPING INFORMATION</h4>
+
+
+        <div [formGroup]="shippingForm" class="vertical">
+
+          <mat-form-field>
+            <input matInput formControlName="firstName" placeholder="FIRST NAME">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput formControlName="lastName" placeholder="LAST NAME">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="address" placeholder="ADDRESS">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="city" placeholder="CITY">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="STATE" formControlName="state">
+              <mat-option *ngFor="let state of states.list" [value]="state">
+                {{state}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput formControlName="zip" placeholder="ZIP">
+          </mat-form-field>
+
+          <mat-slide-toggle #shipToBilling color="primary" (change)="onToggleChange($event)" [checked]="shipToBilling">
+            <strong>SAME AS BILLING ADDRESS</strong>
+          </mat-slide-toggle>
+
+
+        </div>
+
+      </form>
+
+    </mat-card>
+
+
+
+
+
+
+
+  </div>
+
+</div>
+

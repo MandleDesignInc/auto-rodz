@@ -1,40 +1,56 @@
-<div *ngIf="productResults" class="global-font">
+<div class="global-font">
 
-    <div class="page-content">
+  <div *ngIf="searchService.inProgress" class="spinner-container">
+    <mat-spinner #progress></mat-spinner>
+  </div>
 
 
-        <div class="max-width-container">
+  <div class="page-content">
+    <div class="max-width-container">
 
-            <div class="products">
 
-                <mat-card *ngFor="let product of productResults.results">
+      <div class="products">
 
-                    <img mat-card-image [src]="baseUrl + '/cms/assets/images/logo.png'">
+        <mat-card *ngFor="let product of searchService.searchResults.list">
 
-                    <mat-card-title>{{product.suggestedRetail}}</mat-card-title>
-                    <mat-card-subtitle>{{product.brand}}</mat-card-subtitle>
-                    <mat-card-content>{{product.description}}</mat-card-content>
+          <img mat-card-image [src]="placeholderImagePath">
 
-                    <mat-card-actions>
-                        <!--
-                        <button mat-raised-button>DETAILS</button>
-                        -->
-                        <button mat-raised-button (click)="addToCart(product)">ADD TO CART</button>
-                        <!--
-                        <button mat-raised-button (click)="buyNow(product)">BUY NOW</button>
-                        -->
-                    </mat-card-actions>
+          <mat-card-title>{{product.suggestedRetail | nothingFree}}</mat-card-title>
+          <mat-card-subtitle>{{product.brand | removeQuote}}</mat-card-subtitle>
+          <mat-card-subtitle><strong>Part Number: </strong>{{product.partNumber}}</mat-card-subtitle>
+          <mat-card-content>
 
-                </mat-card>
+            <div>{{product.description}}</div>
+            <div class="availability">Quantity Available: <strong>{{product.quantityAvailable}}</strong></div>
 
-            </div>
+          </mat-card-content>
 
-        </div>
+          <mat-card-actions>
+            <button *ngIf="!product.inCart" mat-raised-button (click)="addToCart(product)">ADD TO CART</button>
 
+            <button *ngIf="product.inCart" mat-raised-button><mat-icon>check</mat-icon></button>
+          </mat-card-actions>
+
+        </mat-card>
+
+      </div>
+
+      <div *ngIf="pageCount > 0" id="pageNav">
+
+        <button mat-button color="primary" (click)="searchService.previousPage()"><mat-icon>keyboard_arrow_left</mat-icon></button>
+
+        <h4>PAGE
+          <strong id="pageIndicator">{{searchService.currentPage}}</strong>
+          <span>OF</span>
+          <strong>{{pageCount}}</strong>
+        </h4>
+
+        <button mat-button color="primary" (click)="searchService.nextPage()"><mat-icon>keyboard_arrow_right</mat-icon></button>
+
+      </div>
 
     </div>
-
-
-    <app-footer [content]="footerContent"></app-footer>
+  </div>
+  <app-footer [content]="footerContent"></app-footer>
 
 </div>

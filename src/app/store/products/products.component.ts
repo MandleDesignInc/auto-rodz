@@ -1,49 +1,43 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {Product, ProductResults, StoreService} from '../store.service';
-import {FooterContent, GlobalService} from '../../global.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {FooterContent, GlobalService} from '../../services/global.service';
+import {CartService} from '../../services/cart.service';
+import {SearchService} from '../../services/search.service';
+import {Product} from '../../services/product.service';
 
 @Component({
-    selector: 'app-products',
-    templateUrl: './products.component.html',
-    styleUrls: ['./products.component.css'],
-    encapsulation: ViewEncapsulation.Emulated
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.css'],
+  encapsulation: ViewEncapsulation.Emulated
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, AfterViewInit {
 
-    productResults: ProductResults;
+  placeholderImagePath: string;
 
-    constructor(private storeSvc: StoreService, private globalSvc: GlobalService, private route: ActivatedRoute) {
-    }
+  constructor(public searchService: SearchService, private cartSvc: CartService, private globalSvc: GlobalService) {
 
-    ngOnInit() {
-
-        let query = this.route.snapshot.paramMap.get('query');
-
-        if (query !== null && query.length > 0) {
-
-            this.storeSvc.searchProducts(query).subscribe(results => {
-                console.log(results);
-                this.productResults = results;
-            });
-
-        } else {
-
-            this.storeSvc.getProducts();
-        }
+    this.placeholderImagePath = this.globalSvc.baseUrl + 'assets/image-coming-soon.jpg';
+  }
 
 
-    }
+  ngOnInit() {}
 
-    get footerContent(): FooterContent {
-        return this.globalSvc.footerContent;
-    }
+  ngAfterViewInit() {}
 
-    get baseUrl(): string {
-        return this.globalSvc.baseUrl;
-    }
+  get pageCount(): number {
+    return Math.ceil(this.searchService.searchResults.foundRows / this.searchService.MAX_PAGE_COUNT);
+  }
 
-    addToCart(product: Product): void {
-        this.storeSvc.addToCart(product);
-    }
+  get footerContent(): FooterContent {
+    return this.globalSvc.footerContent;
+  }
+
+  get baseUrl(): string {
+    return this.globalSvc.baseUrl;
+  }
+
+  addToCart(product: Product): void {
+    this.cartSvc.addToCart(product);
+  }
+
 }

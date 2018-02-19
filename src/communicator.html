@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <script type="text/javascript">
+
+
+    // event listener for AuthNet messages
+    if (window.addEventListener) {
+      window.addEventListener("message", receiveMessage, false);
+    } else if (window.attachEvent) {
+      window.attachEvent("onmessage", receiveMessage);
+    }
+
+
+    if (window.location.hash && window.location.hash.length > 1) {
+
+      console.log('dispatched event from hash params');
+      console.log('location: ' + window.location);
+      console.log('location.hash: ' + window.location.hash);
+      console.log('location.hash.substring(1)' + window.location.hash.substring(1));
+
+      dispatchCustomEvent('accept-hash-event', window.location.hash.substring(1));
+
+    }
+
+    function receiveMessage(event) {
+
+      console.log('dispatched event from message listener');
+
+      if (event && event.data) dispatchCustomEvent('accept-message-event', event.data);
+
+    }
+
+    function dispatchCustomEvent(eventName, stringData) {
+
+      var acceptEvent = new CustomEvent(eventName, {'detail': {'json': stringData }});
+      window.parent.parent.dispatchEvent(acceptEvent);
+
+    }
+
+    // From callParentFunction(str) in sample
+    // (str && str.length > 0 && window.parent && window.parent.parent&& window.parent.parent.CommunicationHandler &&
+    // window.parent.parent.CommunicationHandler.onReceiveCommunication)
+
+
+  </script>
+
+</head>
+
+
+
+<body>I exist.</body>
+</html>

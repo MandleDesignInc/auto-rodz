@@ -1,35 +1,43 @@
-<div id="app-container" [class.fixed-toolbar-padding]="toolbarIsFixed">
+<div id="app-container" [class.fixed-toolbar-padding]="toolbarIsFixed" class="global-font">
+
+  <div id="cartBtnContainer">
 
     <button id="cartBtn" (click)="goToCart()" mat-icon-button [class.toggle-color]="!toolbarIsFixed"
             [class.fixed-toolbar-toggle-color]="toolbarIsFixed">
-        <mat-icon>shopping_cart</mat-icon>
+      <mat-icon>shopping_cart</mat-icon>
     </button>
 
-    <button id="toggle" mat-icon-button [class.toggle-color]="!toolbarIsFixed"
-            [class.fixed-toolbar-toggle-color]="toolbarIsFixed" (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon>
-    </button>
+    <div id="cartCount">{{cartService.cart.productCount}}</div>
 
-    <app-bar (onSearch)="onSearch($event)" [navMenu]="navMenu"
-             [background]="baseUrl + 'cms/assets/images/header-background.svg'" [headerContent]="headerContent"
-             [toolbarIsFixed]="toolbarIsFixed"></app-bar>
+  </div>
 
 
-    <mat-sidenav-container>
+  <button id="toggle" mat-icon-button [class.toggle-color]="!toolbarIsFixed"
+          [class.fixed-toolbar-toggle-color]="toolbarIsFixed" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
 
-        <mat-sidenav #sidenav mode="over" [class.fixed-sidenav]="toolbarIsFixed">
-
-            <mat-nav-list>
-                <a *ngFor="let item of navMenu" [routerLink]="item.routerLink" routerLinkActive="active-route"
-                   (click)="sidenav.toggle()" mat-list-item>{{item.title}}</a>
-            </mat-nav-list>
-
-        </mat-sidenav>
+  <app-bar #appBar
+           [navMenu]="navMenu"
+           [background]="baseUrl + 'cms/assets/images/header-background.svg'" [headerContent]="headerContent"
+           [toolbarIsFixed]="toolbarIsFixed"></app-bar>
 
 
-        <router-outlet></router-outlet>
+  <mat-sidenav-container>
 
-    </mat-sidenav-container>
+    <mat-sidenav #sidenav mode="over" [class.fixed-sidenav]="toolbarIsFixed">
+
+      <mat-nav-list>
+        <a *ngFor="let item of navMenu" [routerLink]="item.routerLink" routerLinkActive="active-route"
+           (click)="sidenav.toggle()" mat-list-item>{{item.title}}</a>
+      </mat-nav-list>
+
+    </mat-sidenav>
+
+
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-container>
 
 </div>
 

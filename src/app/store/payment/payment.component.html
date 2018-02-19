@@ -1,0 +1,47 @@
+<div class="global-font payment">
+
+  <div *ngIf="devMode" class="simulate-event-controls">
+    <button (click)="simulate('resizeWindow')">resizeWindow</button>
+    <button (click)="simulate('cancel')">cancel</button>
+    <button (click)="simulate('transactResponse')">transactResponse</button>
+  </div>
+
+
+  <div>
+
+    <h1><strong>PAYMENT DETAILS</strong></h1>
+
+    <div class="payment-content">
+
+      <mat-card #card [style.height.px]="frameHeight">
+
+
+        <div>
+
+          <iframe id="hostedPay"
+                  name="hostedPay"
+                  [height]="frameHeight"
+                  frameborder="0"
+                  scrolling="no"
+                  #acceptFrame>
+          </iframe>
+
+        </div>
+
+      </mat-card>
+
+    </div>
+
+
+  </div>
+
+  <form #accept [formGroup]="acceptFormGroup" target="hostedPay" method="post"
+        action="https://test.authorize.net/payment/payment">
+    <input type="hidden" name="token" id="tokenInput" formControlName="token">
+  </form>
+
+
+</div>
+
+
+

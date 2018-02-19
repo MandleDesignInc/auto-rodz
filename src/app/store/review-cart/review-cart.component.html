@@ -1,0 +1,90 @@
+<div class="cart global-font">
+
+  <h1><strong>YOUR CART</strong></h1>
+
+  <div class="content">
+
+
+    <mat-list>
+
+      <mat-card *ngFor="let item of cartService.cart.lineItems">
+
+        <div *ngIf="item.product.quantityAvailable < item.appCount" class="availability">This product is currently out of stock. Delivery might take a little longer than usual.</div>
+
+
+        <mat-list-item>
+
+          <mat-icon matListIcon>shopping_basket</mat-icon>
+
+
+          <div class="content">
+
+            <div class="vertical">
+              <strong>{{item.product.description}}</strong>
+              <span>{{item.product.brand}}</span>
+              <span>Part No. {{item.product.partNumber}}</span>
+            </div>
+
+            <div class="count-control">
+              <button mat-raised-button [disabled]="item.apiCount < 1" (click)="updateCount(item, -1)"><mat-icon>remove</mat-icon></button>
+              <strong class="count">{{item.apiCount}}</strong>
+              <button mat-raised-button (click)="updateCount(item, 1)"><mat-icon>add</mat-icon></button>
+            </div>
+
+            <div class="right"><strong>{{item.product.suggestedRetail | currency}}</strong></div>
+
+
+          </div>
+
+
+        </mat-list-item>
+
+      </mat-card>
+
+    </mat-list>
+
+
+    <div id="totals">
+
+      <mat-card>
+
+        <mat-list>
+          <mat-list-item>
+            <div matLine><span>SUBTOTAL :</span><strong>{{cartService.cart.subTotal | currency}}</strong></div>
+          </mat-list-item>
+          <mat-list-item>
+            <div matLine><span>SHIPPING :</span><strong>{{estShipping | currency}}</strong></div>
+          </mat-list-item>
+          <mat-list-item>
+            <div *ngIf="estTax !== null" matLine><span>TAX :</span><strong>{{estTax | currency}}</strong></div>
+            <div *ngIf="estTax === null" matLine>
+              <span>TAX :</span>
+              <button (click)="showDialog()" class="calculate-button" mat-button>CALCULATE</button>
+            </div>
+          </mat-list-item>
+          <mat-list-item>
+            <div matLine><span>TOTAL :</span><strong>{{estTotal | currency}}</strong></div>
+          </mat-list-item>
+        </mat-list>
+
+        <mat-card-actions>
+          <button mat-raised-button (click)="checkout()">CHECKOUT</button>
+        </mat-card-actions>
+
+      </mat-card>
+
+
+
+    </div>
+
+
+  </div>
+
+
+
+
+
+
+
+
+</div>

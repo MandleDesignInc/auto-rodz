@@ -1,134 +1,150 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {CardData, Cart, CheckoutData, StoreService} from '../store.service';
-import {GlobalService} from '../../global.service';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+
 import 'rxjs/add/operator/switchMap';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatSlideToggle, MatSlideToggleChange} from '@angular/material';
+import {Billing, CheckoutData, Shipping} from '../../services/order.service';
+import {States} from '../review-cart/states';
 
 
 @Component({
-    selector: 'app-checkout',
-    templateUrl: './checkout.component.html',
-    styleUrls: ['./checkout.component.css']
+  selector: 'app-checkout',
+  templateUrl: './checkout.component.html',
+  styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit, OnDestroy {
+export class CheckoutComponent {
 
-    checkoutData: CheckoutData;
+  @ViewChild('shipToBilling') shipToBillingToggle: MatSlideToggle;
 
-    scripts: HTMLScriptElement[] = [];
+  states: States;
 
-    constructor(private storeSvc: StoreService, private route: ActivatedRoute, private globalSvc: GlobalService) {
-        console.log('Constructor called');
-        this.checkoutData = new CheckoutData();
+  shipToBilling: boolean = true;
+
+  // set to true to display diagnostic data on screen
+  devMode: boolean = false;
+
+  billingData: Billing = new Billing();
+  shippingData: Shipping = new Shipping();
+
+
+  billingForm: FormGroup;
+  shippingForm: FormGroup;
+
+
+  constructor(private formBuilder: FormBuilder) {
+
+    this.states = new States();
+
+    // shipping form
+    this.shippingForm = formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      zip: ['', Validators.required],
+    });
+
+
+    // watch shipping form and pass changes to data object
+    this.shippingForm.get('firstName').valueChanges.forEach((value: string) => this.shippingData.firstName = value);
+    this.shippingForm.get('lastName').valueChanges.forEach((value: string) => this.shippingData.lastName = value);
+    this.shippingForm.get('address').valueChanges.forEach((value: string) => this.shippingData.address = value);
+    this.shippingForm.get('city').valueChanges.forEach((value: string) => this.shippingData.city = value);
+    this.shippingForm.get('state').valueChanges.forEach((value: string) => this.shippingData.state = value);
+    this.shippingForm.get('zip').valueChanges.forEach((value: string) => this.shippingData.zip = value);
+
+    if (this.shipToBilling) this.shippingForm.disable();
+
+
+    // billing form
+    this.billingForm = formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      zip: ['', Validators.required],
+      phone: ['', Validators.required],
+      email: ['', Validators.required]
+    });
+
+
+    // watch billing form and pass changes to data object
+    // if shipToBilling is true, changes are passed to shipping form
+    this.billingForm.get('firstName').valueChanges.forEach((value: string) => {
+      this.billingData.firstName = value;
+      if (this.shipToBilling) this.shippingForm.get('firstName').setValue(value);
+    });
+    this.billingForm.get('lastName').valueChanges.forEach((value: string) => {
+      this.billingData.lastName = value;
+      if (this.shipToBilling) this.shippingForm.get('lastName').setValue(value);
+    });
+    this.billingForm.get('address').valueChanges.forEach((value: string) => {
+      this.billingData.address = value;
+      if (this.shipToBilling) this.shippingForm.get('address').setValue(value);
+    });
+    this.billingForm.get('city').valueChanges.forEach((value: string) => {
+      this.billingData.city = value;
+      if (this.shipToBilling) this.shippingForm.get('city').setValue(value);
+    });
+    this.billingForm.get('state').valueChanges.forEach((value: string) => {
+      this.billingData.state = value;
+      if (this.shipToBilling) this.shippingForm.get('state').setValue(value);
+    });
+    this.billingForm.get('zip').valueChanges.forEach((value: string) => {
+      this.billingData.zip = value;
+      if (this.shipToBilling) this.shippingForm.get('zip').setValue(value);
+    });
+    this.billingForm.get('phone').valueChanges.forEach((value: string) => this.billingData.phone = value);
+    this.billingForm.get('email').valueChanges.forEach((value: string) => this.billingData.email = value);
+
+
+  }
+
+  onToggleChange(event: MatSlideToggleChange): void {
+
+    console.log('checked:  ' + event.checked);
+
+    this.shipToBilling = event.checked;
+
+    if (this.shipToBilling) {
+
+      this.shippingForm.reset({
+        firstName: this.billingData.firstName,
+        lastName: this.billingData.lastName,
+        address: this.billingData.address,
+        city: this.billingData.city,
+        state: this.billingData.state,
+        zip: this.billingData.zip
+      });
+
+      this.shippingForm.disable();
+
+    } else {
+
+      this.shippingForm.reset({
+        firstName: '',
+        lastName: '',
+        address: '',
+        city: '',
+        state: '',
+        zip: ''
+      });
+
+      this.shippingForm.enable();
+
+      console.log('shipping: ' + this.shippingForm.valid);
     }
 
-    ngOnInit() {
+  }
 
-        console.log('onInit() called');
+  get dataValid(): boolean {
 
-        // So far this works best TODO: simplify these
-        this.startLoadingResponseScript().then(() => {
-            console.log('Finished loading response script');
-        });
-        this.startLoadingScript().then(() => {
-            console.log('Finished loading script');
-        });
+    if (this.shipToBilling) return this.billingForm.valid;
 
-        /*
-        this.storeSvc.getProduct(+this.route.snapshot.paramMap.get('part_number')).subscribe(results => {
-            this.product = results['object'];
-            console.log('got Product');
+    return this.billingForm.valid && this.shippingForm.valid;
 
-            // So far this works best TODO: simplify these
-            this.startLoadingResponseScript().then(() => {
-                console.log('Finished loading response script');
-            });
-            this.startLoadingScript().then(() => {
-                console.log('Finished loading script');
-            });
-        });
-        */
-
-    }
-
-
-    ngOnDestroy() {
-        console.log('onDestroy called');
-
-        this.scripts.forEach((script) => {
-            document.getElementsByTagName('body')[0].removeChild(script);
-        });
-    }
-
-    startLoadingResponseScript(): Promise<any> {
-        return new Promise<any>(() => {
-            console.log('Loading ResponseJS...');
-            this.loadResponseJs();
-        });
-    }
-
-    startLoadingScript(): Promise<any> {
-        return new Promise<any>(() => {
-            console.log('Loading AcceptJS...');
-            this.loadAcceptJs();
-        });
-    }
-
-    loadAcceptJs(): void {
-        let script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = 'https://jstest.authorize.net/v3/AcceptUI.js';
-        // script.src = 'https://js.authorize.net/v3/AcceptUI.js';
-        script.charset = 'utf-8';
-        script.async = true;
-        document.getElementsByTagName('body')[0].appendChild(script);
-        this.scripts.push(script);
-    }
-
-    loadResponseJs(): void {
-        let script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = '/assets/payment-response.js';
-        script.async = true;
-        document.getElementsByTagName('body')[0].appendChild(script);
-        this.scripts.push(script);
-    }
-
-
-    @HostListener('window:payment-response', ['$event'])
-    onPaymentResponse(event: any): void {
-        console.log(event.detail);
-
-        let response = event.detail.response;
-
-        let cardData = new CardData();
-        cardData.firstName = response.customerInformation.firstName;
-        cardData.lastName = response.customerInformation.lastName;
-        cardData.cardNumber = response.encryptedCardData.cardNumber;
-        cardData.expDate = response.encryptedCardData.expDate;
-        cardData.dataDescriptor = response.opaqueData.dataDescriptor;
-        cardData.dataValue = response.opaqueData.dataValue;
-
-        this.checkoutData.cardData = cardData;
-
-    }
-
-    sendOrder(): void {
-        console.log('sendOrder()');
-        // TODO
-    }
-
-    testPost(): void {
-        this.storeSvc.testPost(this.checkoutData.cardData.dataValue).subscribe(response => {
-            console.log(response);
-        });
-    }
-
-    get cart(): Cart {
-        return this.storeSvc.cart;
-    }
-
-    get baseUrl(): string {
-        return this.globalSvc.baseUrl;
-    }
+  }
 
 }

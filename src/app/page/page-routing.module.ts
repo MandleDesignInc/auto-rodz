@@ -6,7 +6,6 @@ import {PageComponent} from './page.component';
   imports: [
     RouterModule.forChild([
         {path: 'about', component: PageComponent},
-        {path: 'brands', component: PageComponent},
         {path: 'departments', component: PageComponent},
         {path: 'contact', component: PageComponent},
         {path: 'terms', component: PageComponent},

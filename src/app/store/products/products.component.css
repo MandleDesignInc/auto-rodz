@@ -1,51 +1,91 @@
+.spinner-container {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 25;
+  display: flex;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+mat-spinner {
+  margin: auto;
+}
+
 .page-content {
-    color: #494A4E;
-    padding: 5vw 0;
+  color: #494A4E;
+  padding: 5vw 0;
+  min-height: 35vh;
 }
 
 .products {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
 }
 
 mat-card {
-    flex: auto;
-    margin: 10px 0;
-    display: flex;
-    flex-direction: column;
-    max-width: 26%;
+  background: whitesmoke;
+  flex: auto;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  max-width: 26%;
 }
 
-img.mat-card-image {
-    background: ghostwhite;
+
+.availability {
+  padding-top: 6px;
 }
+
 
 mat-card-actions {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
-button {
-    color: white;
-    background: #1b3f6a;
-    width: 100%;
+mat-card button {
+  color: white;
+  background: #1b3f6a;
+  width: 100%;
+}
+
+#pageNav {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+#pageNav button {
+  min-width: 0;
+}
+
+#pageNav button.mat-button mat-icon {
+  font-size: 32px;
+  height: 32px;
+  width: 32px;
+  line-height: 32px;
+
+}
+
+#pageIndicator {
+  padding: 0 0 0 8px;
 }
 
 @media (max-width: 800px) {
 
-    mat-card {
-        max-width: 40%;
-    }
+  mat-card {
+    max-width: 40%;
+  }
 
 }
 
 @media (max-width: 500px) {
 
-    mat-card {
-        max-width: 70%;
-        margin: 10px auto;
-    }
+  mat-card {
+    max-width: 70%;
+    margin: 10px auto;
+  }
 
 }
 

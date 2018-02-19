@@ -14,3 +14,6 @@ body {
     padding: 0 5vw;
 }
 
+.page-content {
+  min-height: 35vh;
+}

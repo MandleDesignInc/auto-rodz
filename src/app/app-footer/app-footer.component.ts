@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {FooterContent} from '../global.service';
+import {FooterContent} from '../services/global.service';
 
 @Component({
   selector: 'app-footer',
