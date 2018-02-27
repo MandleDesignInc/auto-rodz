@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Product} from './product.service';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {of} from 'rxjs/observable/of';
+import {SalesTaxData} from './order.service';
+import {elementDef} from '@angular/core/src/view';
 
 export class Request {
 
@@ -13,6 +14,8 @@ export class Request {
   count: number;
   countChange: number;
   cartId: number;
+
+  estimateRequest: EstimateRequest;
 
   constructor() {}
 
@@ -34,16 +37,47 @@ export class LineItem {
 
 }
 
+export class Estimate {
+  taxData: SalesTaxData;
+
+  subtotal: number = 0;
+  shipping: number = 0;
+
+  tax: number = null;
+  taxCalculated: boolean = false;
+
+  total: number = 0;
+
+  static placeholder(subtotal: number): Estimate {
+
+    let estimate: Estimate = new Estimate();
+
+    estimate.subtotal = subtotal;
+
+    if (subtotal < 100) {
+      estimate.shipping = 11;
+    }
+
+    estimate.total = estimate.subtotal + estimate.shipping;
+
+    return estimate;
+
+  }
+}
+
+export class EstimateRequest {
+  public cartId: number;
+  public state: string;
+  public city: string;
+}
+
 export class Cart {
 
   id: number;
 
   customerId: number;
 
-  subTotal: number;
-  tax: number;
-  shipping: number;
-  total: number;
+  subtotal: number;
 
   productCount: number;
 
@@ -51,6 +85,7 @@ export class Cart {
 
   constructor() {
     this.lineItems = [];
+
   }
 
 }
@@ -73,6 +108,9 @@ export class CartService {
   // count changes TODO: merge cart functionality to a single observable stream
   countUpdates$: Observable<Cart>;
   private countUpdates = new Subject<Request>();
+
+  private cartChange = new Subject();
+  onCartChange$ = this.cartChange.asObservable();
 
 
   constructor(private http: HttpClient) {
@@ -129,25 +167,27 @@ export class CartService {
 
   setCart(cart: Cart): void {
     this.cart = cart;
+    this.cartChange.next();
   }
 
   getCart(): void {
 
-    this.http.get<Cart>(`https://bluemandle2.com/api/cart/${this.cart.id}`).subscribe(cart => {
+
+    this.http.get<Cart>(`/api/cart/${this.cart.id}`).subscribe(cart => {
       this.setCart(cart);
       console.log('Retrieved cart with id: ' + this.cart.id);
     });
 
+
+
   }
-
-
 
   getNewCart(): void {
 
     let request: Request = new Request();
     request.customerId = this.GUEST_CUSTOMER_ID;
 
-    this.http.put<Cart>('https://bluemandle2.com/api/cart/create', request).subscribe(cart => {
+    this.http.put<Cart>('/api/cart/create', request).subscribe(cart => {
 
       this.setCart(cart);
 
@@ -157,9 +197,19 @@ export class CartService {
     });
   }
 
+  getEstimate(estimateRequest: EstimateRequest): Observable<Estimate> {
+
+    let options = {
+      headers: new HttpHeaders({'Content-Type' : 'application/json'})
+    };
+
+    return this.http.put<Estimate>('/api/cart/estimate', estimateRequest, options);
+
+  }
+
   updateItem(request: Request): Observable<Cart> {
 
-    return this.http.put<Cart>('https://bluemandle2.com/api/cart/update', request);
+    return this.http.put<Cart>('/api/cart/update', request);
 
 
   }
@@ -172,7 +222,7 @@ export class CartService {
     request.cartId = this.cart.id;
     request.count = count;
 
-    this.http.put<Cart>('https://bluemandle2.com/api/cart/add', request).subscribe(cart => {
+    this.http.put<Cart>('/api/cart/add', request).subscribe(cart => {
       this.setCart(cart);
       console.log('Added item ' + product.id + ' to cart ' + this.cart.id);
     });
@@ -185,7 +235,7 @@ export class CartService {
     request.productId = id;
     request.cartId = this.cart.id;
 
-    this.http.put<Cart>('https://bluemandle2.com/api/cart/remove', request).subscribe(cart => {
+    this.http.put<Cart>('/api/cart/remove', request).subscribe(cart => {
       this.setCart(cart);
     });
 
@@ -196,7 +246,7 @@ export class CartService {
     let request: Request = new Request();
     request.cartId = this.cart.id;
 
-    this.http.put<Cart>('https://bluemandle2.com/api/cart/close', request).subscribe(cart => {
+    this.http.put<Cart>('/api/cart/close', request).subscribe(cart => {
 
       this.setCart(cart);
 
@@ -212,7 +262,7 @@ export class CartService {
     let request: Request = new Request();
     request.cartId = this.cart.id;
 
-    this.http.put('https://bluemandle2.com/api/cart/abandon', request).subscribe(response => console.log(response));
+    this.http.put('/api/cart/abandon', request).subscribe(response => console.log(response));
   }
 
   get count(): number {

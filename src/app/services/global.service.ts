@@ -39,9 +39,9 @@ export class NavItem {
 @Injectable()
 export class GlobalService {
 
-    appBaseUrl: string = 'https://bluemandle2.com';
+    // appBaseUrl: string = 'https://bluemandle2.com';
 
-    baseUrl: string = 'https://bluemandle2.com/~autorodz/';
+    baseUrl: string = 'https://autorodz.com/';
 
     isInit: boolean = false;
 

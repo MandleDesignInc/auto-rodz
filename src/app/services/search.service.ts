@@ -132,7 +132,7 @@ export class SearchService {
 
 
     // return this.http.put<Product[]>('https://bluemandle2.com/api/product/list', request);
-    return this.http.put<SearchResults>('https://bluemandle2.com/api/product/list', request);
+    return this.http.put<SearchResults>('/api/product/list', request);
   }
 
   calculateOffset(pageNumber: number): number {

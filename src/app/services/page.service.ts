@@ -77,7 +77,8 @@ export class Page {
 @Injectable()
 export class PageService {
 
-    private baseUrl = 'https://bluemandle2.com/~autorodz/cms/rest/page';
+    // TODO: might need full URL here
+    private baseUrl = '/cms/rest/page';
 
 
     constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }

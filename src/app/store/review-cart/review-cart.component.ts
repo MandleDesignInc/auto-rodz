@@ -1,12 +1,9 @@
-import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
-import {Cart, CartService, ChangeCountParams, LineItem, Request} from '../../services/cart.service';
-import {Product} from '../../services/product.service';
-import {Subject} from 'rxjs/Subject';
-import {Observable} from 'rxjs/Observable';
-import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {CartService, Estimate, EstimateRequest, LineItem} from '../../services/cart.service';
+
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {FormGroup} from '@angular/forms';
 import {States} from './states';
+import {OrderService, SalesTaxData} from '../../services/order.service';
 
 @Component({
   selector: 'review-cart',
@@ -16,27 +13,44 @@ import {States} from './states';
 export class ReviewCartComponent implements OnInit {
 
   @Output() onCheckoutClick = new EventEmitter();
+  @Output() onTaxData = new EventEmitter<SalesTaxData>();
 
-  estTax: number = null;
 
-  constructor(public cartService: CartService, public dialog: MatDialog) {}
+  estimate: Estimate;
+
+  taxLocationData: SalesTaxData;
+
+  constructor(public cartService: CartService, private orderService: OrderService, public dialog: MatDialog) {
+    this.estimate = new Estimate();
+
+    this.cartService.onCartChange$.subscribe(() => {
+      this.requestEstimate();
+    });
+  }
 
   ngOnInit() {
-
+    this.requestEstimate();
   }
 
-  get estShipping(): number {
-    if (this.cartService.cart.subTotal < 100 && this.cartService.cart.lineItems.length > 0) {
-      return 11;
-    } else {
-      return 0;
+  requestEstimate(): void {
+    let request: EstimateRequest = new EstimateRequest();
+    request.cartId = this.cartService.cart.id;
+
+    if (this.taxLocationData) {
+
+      if (this.taxLocationData.city) {
+        request.city = this.taxLocationData.city;
+      }
+
+      if (this.taxLocationData.state) {
+        request.state = this.taxLocationData.state;
+      }
+
     }
-  }
 
-  get estTotal(): number {
-
-    // TODO: need to move all est calculations to front end, final calc on back and check against quote
-    return this.cartService.cart.subTotal + this.estTax + this.estShipping;
+    this.cartService.getEstimate(request).subscribe(estimate => {
+      this.estimate = estimate;
+    });
   }
 
   updateCount(item: LineItem, change: number): void {
@@ -54,22 +68,19 @@ export class ReviewCartComponent implements OnInit {
 
     let dialog = this.dialog.open(ReviewCartDialogComponent, {width: '250px'});
 
-    dialog.afterClosed().subscribe(state => {
+    dialog.afterClosed().subscribe((salesTaxLocationData: SalesTaxData) => {
 
-      console.log(state);
+      let firstLetterCapital: string = salesTaxLocationData.city.toLowerCase().charAt(0).toUpperCase();
 
-      this.estimateTaxAndShipping(state);
+      salesTaxLocationData.city = firstLetterCapital + salesTaxLocationData.city.slice(1).toLowerCase();
+
+      this.orderService.getSalesTaxData(salesTaxLocationData).subscribe(taxLocationData => {
+
+        this.taxLocationData = taxLocationData;
+        this.requestEstimate();
+      });
+
     });
-  }
-
-  estimateTaxAndShipping(state: string): void {
-
-    if (state === 'Iowa') {
-      this.estTax = this.cartService.cart.subTotal * 0.07;
-    } else {
-      this.estTax = 0;
-    }
-
   }
 
 
@@ -82,17 +93,22 @@ export class ReviewCartComponent implements OnInit {
 @Component({
   template: `
     <mat-dialog-content>
+
       <mat-form-field>
-        
-        <mat-select [(ngModel)]="selectedState" placeholder="SELECT YOUR STATE">
+
+        <mat-select [(ngModel)]="taxLocationData.state" placeholder="YOUR STATE">
           <mat-option *ngFor="let state of states.list" [value]="state">
             {{state}}
           </mat-option>
         </mat-select>
       </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [(ngModel)]="taxLocationData.city" placeholder="YOUR CITY">
+      </mat-form-field>
     </mat-dialog-content>
     <mat-dialog-actions>
-      <button mat-button [mat-dialog-close]="selectedState">OK</button>
+      <button mat-button [mat-dialog-close]="taxLocationData">OK</button>
     </mat-dialog-actions>
   `,
   styles: [
@@ -101,11 +117,12 @@ export class ReviewCartComponent implements OnInit {
 })
 export class ReviewCartDialogComponent {
 
-  selectedState: string;
+  taxLocationData: SalesTaxData;
 
   states: States;
 
   constructor(public dialogRef: MatDialogRef<ReviewCartDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.taxLocationData = new SalesTaxData();
     this.states = new States;
   }
 

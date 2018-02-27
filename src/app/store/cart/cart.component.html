@@ -13,17 +13,13 @@
       <mat-step [completed]="cartStep" [editable]="editable">
         <ng-template matStepLabel>YOUR CART</ng-template>
 
+
+
+
+
         <div class="step-content global-font">
-
           <review-cart (onCheckoutClick)="onCheckoutClick()"></review-cart>
-
         </div>
-
-        <!--
-        <div class="button-container">
-          <button mat-raised-button type="button" [disabled]="cartService.cart.empty" matStepperNext>CHECKOUT</button>
-        </div>
-        -->
 
       </mat-step>
 

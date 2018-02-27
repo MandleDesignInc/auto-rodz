@@ -10,7 +10,7 @@ export class BrandService {
 
   getBrands(): Observable<Brand[]> {
 
-    return this.http.get<Brand[]>('https://bluemandle2.com/api/brands').pipe(
+    return this.http.get<Brand[]>('/api/brands').pipe(
       tap(brands => console.log('fetched ' + brands.length + ' brands'))
       // catchError(error => console.log(error))
     );

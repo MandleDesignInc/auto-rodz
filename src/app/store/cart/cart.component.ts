@@ -1,10 +1,10 @@
 import {Component, EventEmitter, HostListener, OnInit, ViewChild} from '@angular/core';
 import {FooterContent, GlobalService} from '../../services/global.service';
-import {Cart, CartService} from '../../services/cart.service';
+import {CartService, Estimate, EstimateRequest} from '../../services/cart.service';
 import {Router} from '@angular/router';
 import {MatHorizontalStepper} from '@angular/material';
 import {
-  AuthNetResizeParams, Billing, Order, OrderService, Shipping,
+  AuthNetResizeParams, Billing, Order, OrderService, SalesTaxData, Shipping,
   TransactionResponse
 } from '../../services/order.service';
 import {CheckoutComponent} from '../checkout/checkout.component';
@@ -34,10 +34,11 @@ export class CartComponent implements OnInit {
 
   paymentSuccess: boolean = false;
 
+
   constructor(public cartService: CartService, private globalService: GlobalService, private orderService: OrderService, private router: Router) {
 
-    this.cartService.cartClosed$.subscribe(id => this.onCartClosed(id));
 
+    this.cartService.cartClosed$.subscribe(id => this.onCartClosed(id));
   }
 
   ngOnInit() {
@@ -49,13 +50,10 @@ export class CartComponent implements OnInit {
 
   }
 
-  removeItem(): void {
-    // this.cartService.removeFromCart();
-  }
-
   onCheckoutClick(): void {
     this.stepper.next();
   }
+
 
   onHostedFormLoaded(loaded: boolean): void {
     if (loaded && this.loading) this.toggleLoading();
@@ -79,6 +77,7 @@ export class CartComponent implements OnInit {
 
     this.order = new Order();
     // TODO: handle invalid cases
+
     this.order.billing = Billing.fromFormValues(this.checkoutComponent.billingForm.value);
     this.order.shipping = Shipping.fromFormValues(this.checkoutComponent.shippingForm.value);
     this.order.cart = this.cartService.cart;
@@ -102,9 +101,6 @@ export class CartComponent implements OnInit {
       // clear cart
       this.cartService.closeCart();
     });
-
-
-
   }
 
   toggleLoading(): void {

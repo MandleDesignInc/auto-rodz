@@ -18,8 +18,6 @@ export class HomeComponent implements OnInit {
   highlights: Highlight[];
 
   intro: string;
-  quote: string; // TODO: change to string[]
-  author: string; // TODO: move to object with quote
 
   constructor(private globalSvc: GlobalService) { }
 
@@ -30,10 +28,6 @@ export class HomeComponent implements OnInit {
     this.highlights = this.mockHighlights;
 
     this.intro = 'We believe in a few simple things: fast cars, good parts, quality supplies. For years, Auto Rodz Performance & Machining has served the Quad Cities from our downtown Davenport location. Now, shop from our hand-picked selection of auto parts and supplies from the comfort of home! We have everything you need to perfect your ride.';
-
-    this.quote = '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. ' +
-        'Lorem ipsum dolor sit amet, consectetur adipiscing."';
-    this.author = '- First Name Last Name';
 
     this.ready = true;
 

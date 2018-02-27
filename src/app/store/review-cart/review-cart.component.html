@@ -48,22 +48,22 @@
 
       <mat-card>
 
-        <mat-list>
+        <mat-list *ngIf="estimate">
           <mat-list-item>
-            <div matLine><span>SUBTOTAL :</span><strong>{{cartService.cart.subTotal | currency}}</strong></div>
+            <div matLine><span>SUBTOTAL :</span><strong>{{estimate.subtotal | currency}}</strong></div>
           </mat-list-item>
           <mat-list-item>
-            <div matLine><span>SHIPPING :</span><strong>{{estShipping | currency}}</strong></div>
+            <div matLine><span>SHIPPING :</span><strong>{{estimate.shipping | currency}}</strong></div>
           </mat-list-item>
           <mat-list-item>
-            <div *ngIf="estTax !== null" matLine><span>TAX :</span><strong>{{estTax | currency}}</strong></div>
-            <div *ngIf="estTax === null" matLine>
+            <div *ngIf="taxLocationData" matLine><span>TAX :</span><strong>{{estimate.tax | currency}}</strong></div>
+            <div *ngIf="!taxLocationData" matLine>
               <span>TAX :</span>
               <button (click)="showDialog()" class="calculate-button" mat-button>CALCULATE</button>
             </div>
           </mat-list-item>
           <mat-list-item>
-            <div matLine><span>TOTAL :</span><strong>{{estTotal | currency}}</strong></div>
+            <div matLine><span>TOTAL :</span><strong>{{estimate.total | currency}}</strong></div>
           </mat-list-item>
         </mat-list>
 

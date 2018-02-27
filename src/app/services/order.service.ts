@@ -125,6 +125,11 @@ export class Order {
 
   cart: Cart;
 
+  subTotal: number;
+  tax: number;
+  shippingCost: number;
+  total: number;
+
   shipping: Shipping;
   billing: Billing;
 
@@ -138,6 +143,7 @@ export class Order {
     this.status = OrderStatus.STATUS_NEW;
 
     this.logs = [];
+
   }
 }
 
@@ -198,6 +204,15 @@ export class Billing {
   }
 }
 
+// TODO: replacement for TaxableState and TaxableCity classes
+export class SalesTaxData {
+  apiMessage: string;
+  public state: string;
+  public city: string;
+  public rate: number = null;
+
+  constructor() {}
+}
 
 @Injectable()
 export class OrderService {
@@ -212,7 +227,7 @@ export class OrderService {
       })
     };
 
-    return this.http.post<Order>('https://bluemandle2.com/api/order/hosted-page', order, options);
+    return this.http.post<Order>('/api/order/hosted-page', order, options);
   }
 
   addOrder(order: Order): Observable<Order> {
@@ -223,9 +238,22 @@ export class OrderService {
       })
     };
 
-    return this.http.put<Order>('https://bluemandle2.com/api/order/add', order, options);
+    return this.http.put<Order>('/api/order/add', order, options);
 
   }
+
+  getSalesTaxData(data: SalesTaxData): Observable<SalesTaxData> {
+
+    let options = {
+      headers : new HttpHeaders({
+        'Content-Type' : 'application/json'
+      })
+    };
+
+    return this.http.put<SalesTaxData>('/api/settings/tax-rate', data, options);
+  }
+
+
 
 
 }
